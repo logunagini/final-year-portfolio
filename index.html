@@ -29,13 +29,13 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+ 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("-RM9rBoczRn1jtWQq"); // Public key paste pannunga
+  })();
+</script>
 </head>
 
 <body class="index-page">
@@ -652,6 +652,7 @@
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
 
+        <div id="alert-box" style="display:none; margin-top:20px; padding:10px; border-radius:5px; text-align:center;"></div>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -691,40 +692,35 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
-              data-aos-delay="200">
-              <div class="row gy-4">
+         <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+  <div class="row gy-4">
 
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
-                </div>
+    <div class="col-md-6">
+      <label for="name-field" class="pb-2">Your Name</label>
+      <input type="text" name="name" id="name-field" class="form-control" required>
+    </div>
 
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
-                </div>
+    <div class="col-md-6">
+      <label for="email-field" class="pb-2">Your Email</label>
+      <input type="email" class="form-control" name="email" id="email-field" required>
+    </div>
 
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Phone Number</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
-                </div>
+    <div class="col-md-12">
+      <label for="phone-field" class="pb-2">Phone Number</label>
+      <input type="text" class="form-control" name="phone" id="phone-field" required>
+    </div>
 
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" id="message-field" required=""></textarea>
-                </div>
+    <div class="col-md-12">
+      <label for="message-field" class="pb-2">Message</label>
+      <textarea class="form-control" name="message" id="message-field" required></textarea>
+    </div>
 
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+    <div class="col-md-12 text-center">
+      <button type="submit">Send Message</button>
+    </div>
+  </div>
+</form>
 
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
           </div><!-- End Contact Form -->
 
         </div>
@@ -768,6 +764,37 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+
+<script>
+  document.getElementById("contact-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Alert Box reference
+    let alertBox = document.getElementById("alert-box");
+
+    emailjs.sendForm("service_ta0gc22", "template_k8grszm", this)
+      .then(function () {
+        alertBox.style.display = "block";
+        alertBox.style.backgroundColor = "#4CAF50"; // Green
+        alertBox.style.color = "white";
+        alertBox.innerText = "✅ Your message has been sent successfully!";
+
+        // Auto hide after 10 sec
+        setTimeout(() => {
+          alertBox.style.display = "none";
+        }, 10000);
+
+        document.getElementById("contact-form").reset();
+      }, function (error) {
+        alertBox.style.display = "block";
+        alertBox.style.backgroundColor = "#f44336"; // Red
+        alertBox.style.color = "white";
+        alertBox.innerText = "❌ Failed to send! Please try again.";
+      });
+  });
+</script>
+
 
 </body>
 
